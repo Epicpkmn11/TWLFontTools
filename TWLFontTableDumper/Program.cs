@@ -39,15 +39,17 @@ namespace TWLFontTableDumper
             {
                 Console.WriteLine($"Found resource {resource.ResourceName} (Size: {resource.CompressedResourceSize}," +
                     $" SHA1: {BitConverter.ToString(resource.CompressedResourceSHA1).Replace("-", "")})");
-                try
-                {
-                    var writer = resource.GetWriter();
-                    writer.WriteResource();
-                    Console.WriteLine($"Successfully decompressed resource {resource.ResourceName}");
-                }
-                catch (IOException e)
-                {
-                    Console.WriteLine(e.Message);
+                if(resource.DecompressedResourceSize > 0) {
+                    try
+                    {
+                        var writer = resource.GetWriter();
+                        writer.WriteResource();
+                        Console.WriteLine($"Successfully decompressed resource {resource.ResourceName}");
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
             }
         }
